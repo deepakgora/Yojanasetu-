@@ -1,0 +1,75 @@
+# Yojanasetu-
+<!DOCTYPE html><html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YojanaSetu - सभी सरकारी योजनाएँ</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-green-100 min-h-screen font-sans">
+  <header class="bg-green-700 text-white p-4 shadow-lg">
+    <h1 class="text-3xl font-bold text-center">YojanaSetu</h1>
+    <p class="text-center text-sm">आपकी भाषा में सभी सरकारी योजनाएँ</p>
+  </header>  <main class="max-w-4xl mx-auto p-4">
+    <div class="mb-4 flex flex-col md:flex-row gap-2 justify-between">
+      <input type="text" id="searchInput" placeholder="योजना खोजें..." class="w-full md:w-2/3 px-4 py-2 border rounded-xl shadow">
+      <select id="languageSelect" class="w-full md:w-1/3 px-4 py-2 border rounded-xl shadow">
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+        <option value="bn">বাংলা</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
+        <!-- और भाषाएं जोड़ सकते हो -->
+      </select>
+    </div><div id="yojanaList" class="grid grid-cols-1 gap-4">
+  <!-- योजना कार्ड यहाँ आएंगे -->
+</div>
+
+  </main>  <footer class="text-center text-xs text-gray-600 py-4">
+    © 2025 YojanaSetu | भारत के नागरिकों के लिए
+  </footer>  <script>
+    const yojanas = [
+      {
+        name_hi: "प्रधानमंत्री आवास योजना",
+        name_en: "Pradhan Mantri Awas Yojana",
+        desc_hi: "हर परिवार को पक्का घर उपलब्ध कराने की योजना।",
+        desc_en: "A housing scheme for all.",
+        link: "https://pmay.gov.in"
+      },
+      {
+        name_hi: "उज्ज्वला योजना",
+        name_en: "Ujjwala Yojana",
+        desc_hi: "गरीब परिवारों को फ्री गैस कनेक्शन।",
+        desc_en: "Free LPG connection to BPL families.",
+        link: "https://www.pmuy.gov.in"
+      }
+    ];
+
+    const searchInput = document.getElementById("searchInput");
+    const yojanaList = document.getElementById("yojanaList");
+    const languageSelect = document.getElementById("languageSelect");
+
+    function renderYojanas(lang = "hi") {
+      const search = searchInput.value.toLowerCase();
+      yojanaList.innerHTML = "";
+
+      yojanas.filter(y => (y[`name_${lang}`] || "").toLowerCase().includes(search)).forEach(y => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-2xl p-4 shadow-md hover:shadow-lg transition";
+        card.innerHTML = `
+          <h2 class="text-xl font-semibold mb-1">${y[`name_${lang}`]}</h2>
+          <p class="text-sm text-gray-700 mb-2">${y[`desc_${lang}`]}</p>
+          <a href="${y.link}" target="_blank" class="text-blue-600 underline">Apply करें</a>
+        `;
+        yojanaList.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", () => renderYojanas(languageSelect.value));
+    languageSelect.addEventListener("change", () => renderYojanas(languageSelect.value));
+
+    renderYojanas();
+  </script></body>
+</html>
